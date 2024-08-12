@@ -26,11 +26,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run go fmt
-        run: test -z $(go fmt ./...)
-
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Config staticcheck
+        run: echo "$GOPATH/bin" >> $GITHUB_PATH
+
+
+      - name: Run go fmt
+        run: test -z $(go fmt ./...)
       
       - name: Linting with staticcheck
         run: staticcheck ./...
